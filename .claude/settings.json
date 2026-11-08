@@ -64,5 +64,8 @@
       "Bash(ncat:*)",
       "Bash(netcat:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "playwright"
+  ]
 }
