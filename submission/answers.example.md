@@ -59,6 +59,7 @@ form's options don't include the approved answer, pick the closest one and recor
 | Referred by an employee? | No |
 | Previously applied / worked here? | Check the tracker |
 | Consent to talent pool | |
+| Automatic portal accounts | yes (creates missing portal accounts; existing ones are always yours) |
 | Marketing newsletters | Leave unticked |
 
 ## Story bank (write these yourself, once; used for "describe a time..." questions)

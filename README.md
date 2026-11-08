@@ -42,8 +42,8 @@ open-source [ai-job-search](https://github.com/ai-job-search-dev/ai-job-search) 
   a lighter model, and an answerer for new questions. Each sends back one line, so the main chat
   stays short and long runs stay cheap.
 - **Honest by design.** It never invents experience, asks you for personal facts it can't know,
-  ignores hidden "if you are an AI..." tricks in job pages, and never types your passwords.
-  Any password it generates for you is kept in your system keychain, never in a file.
+  ignores hidden "if you are an AI..." tricks in job pages, and never shows a password in the chat.
+  Portal accounts it creates for you use passwords kept in your system keychain, never in a file.
 - **Your data stays local.** Your CV, tracker, answers and generated documents stay on your
   machine.
 
@@ -120,7 +120,7 @@ That's it.
 
 | It says | You do |
 |---|---|
-| *"Your turn in the browser: CAPTCHA / login / code"* | Do it in the browser window, then type `done`. |
+| *"Your turn in the browser: CAPTCHA / sign-in / code"* (with a desktop notification) | Do it in that browser tab, then type `done`. It carries on with other jobs meanwhile. |
 | A question about you (birth place, current salary and the like) | Answer in the chat. It saves the answer, so you're never asked twice. |
 | *"Quick reset to keep this fast: type /clear, then continue"* | Type `/clear`, then `continue`. Nothing is lost. |
 
@@ -248,8 +248,8 @@ CV + country
   browser logins and generated documents.
 - **Filled in on your machine:** setup writes your details into a few tracked template files (your
   profile and `CLAUDE.md`). Keep them local, or push them only to a **private** repository.
-- **Passwords:** by default you type them in the browser, and they are never written to the chat.
-  If you ask Claude to *generate* a portal password, `tools/portal_password.py` stores it in your
+- **Passwords:** they are never written to the chat. When it creates a portal account for you (or
+  you ask it to generate a password), `tools/portal_password.py` stores the password in your
   **system keychain** (Windows Credential Manager, macOS Keychain, or GNOME Keyring / KWallet on
   Linux), never in a file. You can find it there later under `cv-to-applied:<site>`. On macOS, click
   **Always Allow** the first time it asks to use the keychain. If no keychain is available, it stores
@@ -271,8 +271,13 @@ two things:
 - **Status sync (`/gmail-sync`):** it reads replies from employers (interview invites, assessments,
   rejections, offers) and proposes tracker updates. **Nothing is written until you approve.**
 
-In this release, **portal logins, account passwords, verification codes and email links stay with
-you.** The autopilot stops and asks you to do them in the browser.
+**Portal accounts.** When a job portal needs an account and you don't have one there yet, it creates
+it for you: your email, a generated password kept in your system keychain, and the verification
+email read through Gmail (only from the portal's or employer's own domain). If you **already have an
+account** there, it doesn't touch it: it sends you a desktop notification, leaves that tab open for
+you to sign in, and carries on with the next job. CAPTCHAs, SMS or authenticator codes and
+e-signatures always stay with you. To turn account creation off, add the line
+`Automatic portal accounts: no` to `submission/answers.md`.
 
 **How it was tested.** The per-platform playbooks in
 [`submission/playbooks/`](submission/playbooks/) were written from real applications on the main

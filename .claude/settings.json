@@ -26,7 +26,11 @@
       "Bash(python tools/fetch_page.py:*)",
       "Bash(python3 tools/fetch_page.py:*)",
       "Bash(python tools/posting_guard.py:*)",
-      "Bash(python3 tools/posting_guard.py:*)"
+      "Bash(python3 tools/posting_guard.py:*)",
+      "Bash(python tools/notify.py:*)",
+      "Bash(python3 tools/notify.py:*)",
+      "Bash(python tools/portal_password.py:*)",
+      "Bash(python3 tools/portal_password.py:*)"
     ],
     "ask": [
       "Edit(.claude/settings.json)",

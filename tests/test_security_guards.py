@@ -405,6 +405,9 @@ class AgentGrantGuardTests(GuardRepoFixture):
             (agents / "answerer.md", "NotebookEdit"),
             (agents / "submitter.md", "mcp__playwright__browser_run_code_unsafe"),
             (agents / "drafter.md", "mcp__playwright__browser_click"),
+            (agents / "submitter.md", "mcp__claude_ai_Gmail__search_threads"),
+            (agents / "account.md", "mcp__claude_ai_Gmail__send_message"),
+            (agents / "account.md", "Agent"),
         ):
             with self.subTest(agent=path.stem, tool=tool):
                 self.write_agent(f"Read, Edit, Write, {tool}", path=path)
@@ -412,6 +415,20 @@ class AgentGrantGuardTests(GuardRepoFixture):
                 self.assertEqual(result.returncode, 1)
                 self.assertIn(f"'{tool}'", result.stdout)
                 self.write_agent("Read, Edit, Write", path=path)
+
+    def test_only_the_account_agent_may_run_browser_code_and_read_gmail(self):
+        agents = self.agent.parent
+        self.write_agent(
+            "Read, Bash, Edit, Write, mcp__playwright__browser_run_code_unsafe, "
+            "mcp__claude_ai_Gmail__search_threads, mcp__claude_ai_Gmail__get_thread",
+            path=agents / "account.md",
+        )
+        result = run_guards(self.root)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.write_agent("Read, mcp__playwright__browser_run_code_unsafe", path=agents / "submitter.md")
+        result = run_guards(self.root)
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("browser_run_code_unsafe", result.stdout)
 
     def test_agent_frontmatter_missing_fails_cleanly(self):
         self.agent.write_text("No frontmatter here.\n", encoding="utf-8")

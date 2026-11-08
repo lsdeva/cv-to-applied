@@ -91,6 +91,13 @@ ALLOWED_PERMISSIONS = {
     # Reads a file or stdin, writes only to an explicit --out, never fetches.
     "Bash(python tools/posting_guard.py:*)",
     "Bash(python3 tools/posting_guard.py:*)",
+    # Desktop notification (sound + pop-up) when a run needs the user. Fixed argv, no network.
+    "Bash(python tools/notify.py:*)",
+    "Bash(python3 tools/notify.py:*)",
+    # Keychain password helper for portal accounts: never prints a password, serves it once on
+    # 127.0.0.1 to the account agent, refuses to fall back to a file.
+    "Bash(python tools/portal_password.py:*)",
+    "Bash(python3 tools/portal_password.py:*)",
 }
 
 # Rules that must stay in .claude/settings.json permissions.ask. An ask rule
@@ -283,6 +290,12 @@ AGENT_EXTRA_TOOLS = {
     "drafter": {"Edit", "Write"},
     "answerer": {"Edit", "Write"},
     "submitter": {"Edit", "Write"} | PLAYWRIGHT_AGENT_TOOLS,
+    # Creates missing portal accounts and signs in with keychain passwords. It alone may run
+    # browser code (to fetch the password from the local helper and fill it without it ever
+    # entering the transcript) and read Gmail (verification emails). No Gmail send or delete.
+    "account": {"Edit", "Write", "mcp__playwright__browser_run_code_unsafe",
+                "mcp__claude_ai_Gmail__search_threads", "mcp__claude_ai_Gmail__get_thread"}
+    | PLAYWRIGHT_AGENT_TOOLS,
 }
 
 _FRONTMATTER_KEY = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")
