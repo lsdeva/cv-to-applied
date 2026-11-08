@@ -112,6 +112,10 @@ It applies to job #1 while you watch, and asks **"Submit this one?"** before the
 `yes`, and it applies to the rest of the list, sending a one-line update per job:
 `✓ submitted`, `⏸ waiting for you`, `⤼ skipped`.
 
+> **Note:** if you already have an account on a job portal, it may wait for you to sign in there.
+> You get a desktop notification, sign in on that browser tab, then type `done`. Portals where you
+> have no account yet are set up for you automatically.
+
 That's it.
 
 ---
