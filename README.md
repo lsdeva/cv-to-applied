@@ -43,7 +43,9 @@ open-source [ai-job-search](https://github.com/ai-job-search-dev/ai-job-search) 
 - **Your data stays local.** Your CV, tracker, answers and generated documents stay on your
   machine.
 
-<!-- Demo GIF goes here (assets/demo.gif) once recorded. -->
+<p align="center">
+  <img src="assets/demo.gif" alt="Demo: a real job application filled in automatically, then how to get started (company and personal details blurred)" width="860">
+</p>
 
 ---
 
