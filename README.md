@@ -19,6 +19,10 @@ country you want to work in, and it:
 4. writes a tailored CV and cover letter for each job
 5. fills in and submits the applications in a browser window **you can watch**
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Demo: a real job application filled in automatically, then how to get started (company and personal details blurred)" width="860">
+</p>
+
 You don't type commands. It stops only when it needs you: a CAPTCHA, a login, a verification code,
 or a personal question it can't answer from your CV.
 
@@ -42,10 +46,6 @@ open-source [ai-job-search](https://github.com/ai-job-search-dev/ai-job-search) 
   Any password it generates for you is kept in your system keychain, never in a file.
 - **Your data stays local.** Your CV, tracker, answers and generated documents stay on your
   machine.
-
-<p align="center">
-  <img src="assets/demo.gif" alt="Demo: a real job application filled in automatically, then how to get started (company and personal details blurred)" width="860">
-</p>
 
 ---
 
