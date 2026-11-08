@@ -57,6 +57,9 @@ open-source [ai-job-search](https://github.com/ai-job-search-dev/ai-job-search) 
   in to a Claude account that includes Claude Code
 - **[Git](https://git-scm.com/downloads)**
 - **Your CV** as a PDF, Word file or plain text
+- **Model:** tested with **Claude Opus 5.5 at medium effort** as the main model (pick it with `/model`
+  in the chat). The form-filling helper runs on the lighter Sonnet model automatically. Other recent
+  models should work, but results and cost may differ.
 
 Everything else (Node.js, Python, LaTeX for the PDFs, Bun, the browser driver, `keyring` for the
 system keychain) is installed for you on the first run. You approve each install.
