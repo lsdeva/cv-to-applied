@@ -1,9 +1,4 @@
-<!-- Heads-up before you publish: if you built this in a personalized fork
-     (your profile data, your market's job portals, another AI runtime),
-     note that GitHub points new PRs at the UPSTREAM repo by default.
-     Those adaptations live in forks - see CONTRIBUTING.md - and get
-     discovered via the pinned "Community forks & adaptations" discussion (#78).
-     Check the "base repository" dropdown above before you continue. -->
+<!-- No personal data: no CV, profile, tracker rows, saved answers or employer names. -->
 
 ## What changed and why
 

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="200" viewBox="0 0 960 200" role="img" aria-label="cv-to-applied: your CV in, tailored applications out">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e3a5f"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="200" rx="16" fill="url(#bg)"/>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#e2e8f0">
+    <rect x="60" y="62" width="64" height="80" rx="6" fill="#f8fafc"/>
+    <rect x="72" y="78" width="40" height="6" rx="3" fill="#94a3b8"/>
+    <rect x="72" y="92" width="32" height="6" rx="3" fill="#cbd5e1"/>
+    <rect x="72" y="106" width="40" height="6" rx="3" fill="#cbd5e1"/>
+    <rect x="72" y="120" width="26" height="6" rx="3" fill="#cbd5e1"/>
+    <path d="M150 102 h70" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/>
+    <path d="M208 90 l14 12 l-14 12" fill="none" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="282" cy="102" r="34" fill="#22c55e"/>
+    <path d="M266 103 l11 11 l21 -23" fill="none" stroke="#f8fafc" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="350" y="98" font-size="46" font-weight="700" fill="#f8fafc">cv-to-applied</text>
+    <text x="352" y="138" font-size="21" fill="#cbd5e1">Your CV in. Tailored applications out. You watch and approve.</text>
+  </g>
+</svg>

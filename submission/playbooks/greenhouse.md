@@ -7,7 +7,7 @@
 ## Field mechanics
 - Text inputs (`#first_name`, `#last_name`, `#email`, `question_N` text) are React-controlled. `fill()` usually works, but if `pressSequentially` hangs on long URLs, click the field and use `page.keyboard.type(...)` instead.
 - `#preferred_name` exists: leave it empty.
-- `#country` next to Phone is the **phone country code** combobox (shows "+65"), not the residence country. Type the country name and click the matching `[role=option]`.
+- `#country` next to Phone is the **phone country code** combobox (shows a dial code such as "+1"), not the residence country. Type the country name and click the matching `[role=option]`.
 - `#candidate-location` (Location (City)) is a geo autocomplete. Typing just the city returns several countries (e.g. "<city>" also matches Brazil), and picking the first option is wrong. Type "City, Country" and click the exact `^City, Country$` option. Read the value back from the react-select control's innerText, because the `<input>` value stays empty.
 - Custom questions are react-select comboboxes with ids `question_<N>`. Demographic questions have bare numeric ids (e.g. `4024662004`). Click the input, then click the visible `[role=option]` (use an anchored regex for short "Yes"/"No" options). Verify via the control's innerText.
 - GDPR consent checkboxes: `gdpr_retention_consent_given_1`, `gdpr_demographic_data_consent_given_1`.

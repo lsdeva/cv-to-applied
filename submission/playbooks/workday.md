@@ -9,7 +9,7 @@
 
 ## Account / password
 - Password rules: 8+ chars, upper, lower, number, special character.
-- Generated per-site passwords live in `submission/secrets/portal-passwords.txt` (gitignored). They are served to the page via a one-shot 127.0.0.1 helper and fetched with `page.request.get(...)` inside `browser_run_code_unsafe`, so the value never enters the chat. Never take snapshots while a password field holds a value.
+- Generated per-site passwords live in the system keychain (`tools/portal_password.py`), never in a file. They are served to the page via a one-shot 127.0.0.1 helper and fetched with `page.request.get(...)` inside `browser_run_code_unsafe`, so the value never enters the chat. Never take snapshots while a password field holds a value.
 - Sign-in: `fill()` + click on Sign In failed ("wrong email or password"); clearing the fields, typing with `pressSequentially` and pressing **Enter** worked. Workday overlays a click-filter div, so buttons need `click({ force: true })`.
 - The verification email can be read with the Gmail connector when the user is away (link must be on the tenant's own myworkdayjobs.com domain).
 
