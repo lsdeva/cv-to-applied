@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@playwright/mcp@0.0.83",
+        "--browser",
+        "msedge",
+        "--user-data-dir",
+        "submission/browser-profile",
+        "--output-dir",
+        "submission/screenshots",
+        "--file-paths",
+        "absolute"
+      ]
+    }
+  }
+}

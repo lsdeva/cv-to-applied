@@ -119,3 +119,9 @@ company_research/*.json
 
 # Brainstorm mockups (superpowers visual companion) - never ship
 .superpowers/
+
+# /submit browser automation (personal - never commit)
+submission/browser-profile/
+submission/screenshots/
+submission/answers.md
+submission/secrets/
