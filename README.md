@@ -20,7 +20,7 @@ country you want to work in, and it:
 5. fills in and submits the applications in a browser window **you can watch**
 
 <p align="center">
-  <img src="assets/demo.gif" alt="Demo: a real job application filled in automatically, then how to get started (company and personal details blurred)" width="860">
+  <img src="assets/demo.gif" alt="Demo: a real job application filled in automatically, then how to get started (company and personal details hidden)" width="860">
 </p>
 
 You don't type commands. It stops only when it needs you: a CAPTCHA, a login, a verification code,
