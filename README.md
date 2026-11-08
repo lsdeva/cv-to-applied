@@ -114,7 +114,7 @@ It applies to job #1 while you watch, and asks **"Submit this one?"** before the
 
 > **Note:** if you already have an account on a job portal, it may wait for you to sign in there.
 > You get a desktop notification, sign in on that browser tab, then type `done`. Portals where you
-> have no account yet are set up for you automatically.
+> have no account yet are set up for you automatically, with the password kept in your system keychain.
 
 That's it.
 
