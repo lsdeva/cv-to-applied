@@ -37,6 +37,8 @@ Checks:
    shipped agents read untrusted postings. `tools:` is tool-name granularity
    (a `Bash(pattern)` entry resolves to plain Bash), so a patterned entry is
    rejected as misleading; settings.json's allow list is what scopes Bash.
+   The starter's worker agents (drafter, answerer, submitter) may add the
+   per-name extras in AGENT_EXTRA_TOOLS, never Agent or NotebookEdit.
 
 Stdlib only. Exit 0 on success, 1 with a failure list otherwise.
 """
@@ -210,7 +212,7 @@ ALLOWED_IGNORE_NEGATIONS = {
 }
 
 # Hook commands the template legitimately ships, as "<Event>:<command>" strings.
-# Empty by design - the template ships no hooks at all.
+# The upstream template ships none. This starter adds exactly one, below.
 #
 # A hook is strictly more dangerous than a permissions.allow entry. A permission
 # pre-approves something Claude may choose to do; a hook runs unconditionally when
@@ -220,6 +222,11 @@ ALLOWED_IGNORE_NEGATIONS = {
 # executed on session start:
 # https://research.jfrog.com/post/shai-hulud-is-back-august/
 ALLOWED_HOOKS: set[str] = set()
+# The starter's one hook: a PreToolUse guard on Bash that only BLOCKS (exit 2)
+# `cat > file`, `cat <<EOF`, `tee file` and a bare `cat`. Those hang on stdin or
+# clobber files when parallel subagents write the same scratch names. It runs
+# nothing else, reads only the tool-call JSON on stdin, and never approves.
+ALLOWED_HOOKS.add('PreToolUse:python "$CLAUDE_PROJECT_DIR/tools/hooks/bash_guard.py"')
 
 FORBIDDEN_SCRIPTS = {"preinstall", "install", "postinstall", "prepare", "prepack"}
 
@@ -254,6 +261,29 @@ ALLOWED_SKILL_TOOLS = {
 # not here: `tools:` is tool-name granularity, verified empirically - a
 # `Bash(echo *)` entry gives the agent plain Bash.
 ALLOWED_AGENT_TOOLS = {"Read", "Glob", "Grep", "WebFetch", "WebSearch", "Bash"}
+
+# Playwright MCP browser tools the submitter may drive (the server pinned in
+# .mcp.json). browser_run_code_unsafe is left out on purpose: it runs Node code
+# on the user's machine, while browser_evaluate stays inside the page.
+PLAYWRIGHT_AGENT_TOOLS = {
+    f"mcp__playwright__browser_{name}"
+    for name in (
+        "click", "close", "console_messages", "drag", "drop", "evaluate", "file_upload",
+        "fill_form", "find", "handle_dialog", "hover", "navigate", "navigate_back",
+        "network_request", "network_requests", "press_key", "resize", "select_option",
+        "snapshot", "tabs", "take_screenshot", "type", "wait_for",
+    )
+}
+
+# Extra tools for the starter's token-saving worker agents, keyed by file name.
+# They only run after posting-fetcher (no write tools) has gated and cleaned the
+# posting, and they write the user's own gitignored files (drafts, form answers,
+# tracker). Still no Agent and no NotebookEdit: a worker never spawns a wider one.
+AGENT_EXTRA_TOOLS = {
+    "drafter": {"Edit", "Write"},
+    "answerer": {"Edit", "Write"},
+    "submitter": {"Edit", "Write"} | PLAYWRIGHT_AGENT_TOOLS,
+}
 
 _FRONTMATTER_KEY = re.compile(r"^([A-Za-z0-9_-]+):\s*(.*)$")
 
@@ -580,8 +610,9 @@ def check_agent_tool_grants() -> None:
                 f"an explicit list drawn from {sorted(ALLOWED_AGENT_TOOLS)}."
             )
             continue
+        allowed = ALLOWED_AGENT_TOOLS | AGENT_EXTRA_TOOLS.get(path.stem, set())
         for entry in _tool_entries(data.get("tools")):
-            if entry in ALLOWED_AGENT_TOOLS:
+            if entry in allowed:
                 continue
             if "(" in entry:
                 errors.append(

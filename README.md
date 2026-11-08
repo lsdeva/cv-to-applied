@@ -70,6 +70,18 @@ That's it.
 - **To stop at any time:** type `stop`.
 - **To carry on later:** open the folder again and type `continue`. It resumes where it left off and
   never applies twice to the same job.
+- **"Quick reset to keep this fast: type /clear, then continue":** type `/clear`, then `continue`.
+  Nothing is lost. A fresh chat keeps long runs fast and cheap.
+
+### Why it's cheaper to run now
+Each job runs in small helper agents: one writes the documents, one reviews them, one fills the form
+(on the lighter Sonnet model) and one writes answers to new questions. Each sends back a one-line
+result, so the main chat stays short instead of re-reading every web page it has seen. Your tracker,
+documents and saved answers work the same as before.
+
+**Updating an existing copy:** in the folder, run `git pull`, then type `continue`. Your profile,
+tracker, documents and saved answers aren't touched. If git says local changes would be overwritten,
+run `git stash`, `git pull`, then `git stash pop`.
 
 ---
 

@@ -391,6 +391,28 @@ class AgentGrantGuardTests(GuardRepoFixture):
         result = run_guards(self.root)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_worker_agents_may_write_but_not_spawn(self):
+        agents = self.agent.parent
+        self.write_agent("Read, Grep, Bash, Edit, Write", path=agents / "drafter.md")
+        self.write_agent(
+            "Read, Edit, Write, mcp__playwright__browser_snapshot, mcp__playwright__browser_click",
+            path=agents / "submitter.md",
+        )
+        result = run_guards(self.root)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        for path, tool in (
+            (agents / "drafter.md", "Agent"),
+            (agents / "answerer.md", "NotebookEdit"),
+            (agents / "submitter.md", "mcp__playwright__browser_run_code_unsafe"),
+            (agents / "drafter.md", "mcp__playwright__browser_click"),
+        ):
+            with self.subTest(agent=path.stem, tool=tool):
+                self.write_agent(f"Read, Edit, Write, {tool}", path=path)
+                result = run_guards(self.root)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn(f"'{tool}'", result.stdout)
+                self.write_agent("Read, Edit, Write", path=path)
+
     def test_agent_frontmatter_missing_fails_cleanly(self):
         self.agent.write_text("No frontmatter here.\n", encoding="utf-8")
         result = run_guards(self.root)
